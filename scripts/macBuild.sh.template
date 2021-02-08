@@ -1,0 +1,3 @@
+cmake -Bbuild -DCMAKE_PREFIX_PATH=/Users/yourname/Qt/5.15.2/clang_64/lib/cmake/
+
+make -C build

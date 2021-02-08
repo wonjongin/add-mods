@@ -1,0 +1,4 @@
+# cmake -Bbuild -DCMAKE_PREFIX_PATH=/Volumes/FAT32/Qt/5.15.2/mingw81_64/lib/cmake/ -DCMAKE_TOOLCHAIN_FILE=toolchain/mingw64-windows.cmake
+cmake -Bbuild -DCMAKE_PREFIX_PATH=/Users/yourname/Qt/5.15.2/clang_64/lib/cmake/ -DCMAKE_TOOLCHAIN_FILE=toolchain/mingw64-windows.cmake
+
+make -C build

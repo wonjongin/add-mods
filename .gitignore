@@ -1,0 +1,4 @@
+build
+packs
+scripts/macBuild.sh
+scripts/winBuild.sh
