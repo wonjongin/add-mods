@@ -1,0 +1,10 @@
+
+cmake -Bbuild -DCMAKE_PREFIX_PATH='C:\Qt\5.15.2\mingw81_64\lib\cmake' -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -G"MinGW Makefiles"
+
+make -C build
+
+rmdir /s /q dist
+
+python ./scripts/winPack.py
+
+.\dist\add-mods.exe

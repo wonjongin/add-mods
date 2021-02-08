@@ -65,6 +65,8 @@ Section "Install" SEC01
   File "dist\platforms\qminimal.dll"
   File "dist\platforms\qoffscreen.dll"
   File "dist\platforms\qwindows.dll"
+  SetOutPath "$INSTDIR\styles"
+  File "dist\styles\qwindowsvistastyle.dll"
   SetOutPath "$INSTDIR"
   File "dist\Qt5Core.dll"
   File "dist\Qt5Gui.dll"
@@ -116,6 +118,7 @@ Section Uninstall
   Delete "$INSTDIR\platforms\qoffscreen.dll"
   Delete "$INSTDIR\platforms\qminimal.dll"
   Delete "$INSTDIR\platforms\qdirect2d.dll"
+  Delete "$INSTDIR\styles\qwindowsvistastyle.dll"
   Delete "$INSTDIR\add-mods.exe"
 
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
@@ -124,6 +127,7 @@ Section Uninstall
 
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\platforms"
+  RMDir "$INSTDIR\styles"
   RMDir "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
