@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "main_window.h"
+// #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:wmainCRTStartup")
 
 /**
  * Entry Point

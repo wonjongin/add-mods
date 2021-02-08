@@ -23,7 +23,7 @@
          <enum>QFrame::Box</enum>
         </property>
         <property name="text">
-         <string>넣을 모드나 리소스팩을 를 여기에 끌어다 놓으세요</string>
+         <string>넣을 모드나 리소스팩을 여기에 끌어다 놓으세요</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

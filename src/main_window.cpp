@@ -72,7 +72,7 @@ void MainWindow::addModsBtn()
     Minecraft::intoMinecraftPath(0 , oriPath);
     qDebug() << oriPath << ": is copied!";
   }
-  ui.labelMods->setText("완료되었습니다.\n넣을 모드나 리소스팩을 를 여기에 끌어다 놓으세요");
+  ui.labelMods->setText("완료되었습니다.\n넣을 모드나 리소스팩을 여기에 끌어다 놓으세요");
 }
 void MainWindow::addResPacksBtn()
 {
@@ -81,7 +81,7 @@ void MainWindow::addResPacksBtn()
   {
     Minecraft::intoMinecraftPath(1 , oriPath);
   }
-  ui.labelMods->setText("완료되었습니다.\n넣을 모드나 리소스팩을 를 여기에 끌어다 놓으세요");
+  ui.labelMods->setText("완료되었습니다.\n넣을 모드나 리소스팩을 여기에 끌어다 놓으세요");
 }
 void MainWindow::openMinePath()
 {
@@ -89,6 +89,6 @@ void MainWindow::openMinePath()
 }
 void MainWindow::resetList()
 {
-  ui.labelMods->setText("넣을 모드나 리소스팩을 를 여기에 끌어다 놓으세요");
+  ui.labelMods->setText("넣을 모드나 리소스팩을 여기에 끌어다 놓으세요");
   this->oriPaths.clear();
 }
