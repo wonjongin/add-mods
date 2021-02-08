@@ -2,13 +2,12 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Add Mods"
-!define PRODUCT_VERSION "0.0.9"
+!define PRODUCT_VERSION "0.9.1"
 !define PRODUCT_PUBLISHER "wonjongin"
 !define PRODUCT_WEB_SITE "https://nanoby.duckdns.org"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\add-mods.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
-!define PRODUCT_STARTMENU_REGVAL "NSIS:StartMenuDir"
 
 SetCompressor lzma
 
@@ -24,14 +23,6 @@ SetCompressor lzma
 !insertmacro MUI_PAGE_WELCOME
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
-; Start menu page
-var ICONS_GROUP
-!define MUI_STARTMENUPAGE_NODISABLE
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "Add Mods"
-!define MUI_STARTMENUPAGE_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
-!define MUI_STARTMENUPAGE_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
-!define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${PRODUCT_STARTMENU_REGVAL}"
-!insertmacro MUI_PAGE_STARTMENU Application $ICONS_GROUP
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
@@ -50,8 +41,8 @@ var ICONS_GROUP
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "Add Mods Setup.exe"
-InstallDir "$PROGRAMFILES\AddMods"
+OutFile "Add-Mods-Setup.exe"
+InstallDir "$PROGRAMFILES\Add Mods"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
@@ -60,30 +51,67 @@ Section "Install" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite try
   File "dist\add-mods.exe"
+  CreateDirectory "$SMPROGRAMS\Add Mods"
+  CreateShortCut "$SMPROGRAMS\Add Mods\Add Mods.lnk" "$INSTDIR\add-mods.exe"
+  CreateShortCut "$DESKTOP\Add Mods.lnk" "$INSTDIR\add-mods.exe"
+  File "dist\D3Dcompiler_47.dll"
+  SetOutPath "$INSTDIR\iconengines"
+  File "dist\iconengines\qsvgicon.dll"
+  SetOutPath "$INSTDIR\imageformats"
+  File "dist\imageformats\qgif.dll"
+  File "dist\imageformats\qicns.dll"
+  File "dist\imageformats\qico.dll"
+  File "dist\imageformats\qjpeg.dll"
+  File "dist\imageformats\qsvg.dll"
+  File "dist\imageformats\qtga.dll"
+  File "dist\imageformats\qtiff.dll"
+  File "dist\imageformats\qwbmp.dll"
+  File "dist\imageformats\qwebp.dll"
+  SetOutPath "$INSTDIR"
+  File "dist\libEGL.dll"
+  File "dist\libgcc_s_seh-1.dll"
+  File "dist\libGLESv2.dll"
+  File "dist\libstdc++-6.dll"
+  File "dist\libwinpthread-1.dll"
+  File "dist\opengl32sw.dll"
   SetOutPath "$INSTDIR\platforms"
-  File "dist\platforms\qdirect2d.dll"
-  File "dist\platforms\qminimal.dll"
-  File "dist\platforms\qoffscreen.dll"
   File "dist\platforms\qwindows.dll"
-  SetOutPath "$INSTDIR\styles"
-  File "dist\styles\qwindowsvistastyle.dll"
   SetOutPath "$INSTDIR"
   File "dist\Qt5Core.dll"
   File "dist\Qt5Gui.dll"
+  File "dist\Qt5Svg.dll"
   File "dist\Qt5Widgets.dll"
-
-; Shortcuts
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-  CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Add Mods.lnk" "$INSTDIR\add-mods.exe"
-  CreateShortCut "$DESKTOP\Add Mods.lnk" "$INSTDIR\add-mods.exe"
-  !insertmacro MUI_STARTMENU_WRITE_END
+  SetOutPath "$INSTDIR\styles"
+  File "dist\styles\qwindowsvistastyle.dll"
+  SetOutPath "$INSTDIR\translations"
+  File "dist\translations\qt_ar.qm"
+  File "dist\translations\qt_bg.qm"
+  File "dist\translations\qt_ca.qm"
+  File "dist\translations\qt_cs.qm"
+  File "dist\translations\qt_da.qm"
+  File "dist\translations\qt_de.qm"
+  File "dist\translations\qt_en.qm"
+  File "dist\translations\qt_es.qm"
+  File "dist\translations\qt_fi.qm"
+  File "dist\translations\qt_fr.qm"
+  File "dist\translations\qt_gd.qm"
+  File "dist\translations\qt_he.qm"
+  File "dist\translations\qt_hu.qm"
+  File "dist\translations\qt_it.qm"
+  File "dist\translations\qt_ja.qm"
+  File "dist\translations\qt_ko.qm"
+  File "dist\translations\qt_lv.qm"
+  File "dist\translations\qt_pl.qm"
+  File "dist\translations\qt_ru.qm"
+  File "dist\translations\qt_sk.qm"
+  File "dist\translations\qt_tr.qm"
+  File "dist\translations\qt_uk.qm"
+  File "dist\translations\qt_zh_TW.qm"
 SectionEnd
 
 Section -AdditionalIcons
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
-  !insertmacro MUI_STARTMENU_WRITE_END
+  SetOutPath $INSTDIR
+  CreateShortCut "$SMPROGRAMS\Add Mods\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
 Section -Post
@@ -100,34 +128,74 @@ SectionEnd
 
 Function un.onUninstSuccess
   HideWindow
-  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) is deleted."
+  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) is purged"
 FunctionEnd
 
 Function un.onInit
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Really delete $(^Name) ??" IDYES +2
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Really delete $(^Name)?" IDYES +2
   Abort
 FunctionEnd
 
 Section Uninstall
-  !insertmacro MUI_STARTMENU_GETFOLDER "Application" $ICONS_GROUP
   Delete "$INSTDIR\uninst.exe"
+  Delete "$INSTDIR\translations\qt_zh_TW.qm"
+  Delete "$INSTDIR\translations\qt_uk.qm"
+  Delete "$INSTDIR\translations\qt_tr.qm"
+  Delete "$INSTDIR\translations\qt_sk.qm"
+  Delete "$INSTDIR\translations\qt_ru.qm"
+  Delete "$INSTDIR\translations\qt_pl.qm"
+  Delete "$INSTDIR\translations\qt_lv.qm"
+  Delete "$INSTDIR\translations\qt_ko.qm"
+  Delete "$INSTDIR\translations\qt_ja.qm"
+  Delete "$INSTDIR\translations\qt_it.qm"
+  Delete "$INSTDIR\translations\qt_hu.qm"
+  Delete "$INSTDIR\translations\qt_he.qm"
+  Delete "$INSTDIR\translations\qt_gd.qm"
+  Delete "$INSTDIR\translations\qt_fr.qm"
+  Delete "$INSTDIR\translations\qt_fi.qm"
+  Delete "$INSTDIR\translations\qt_es.qm"
+  Delete "$INSTDIR\translations\qt_en.qm"
+  Delete "$INSTDIR\translations\qt_de.qm"
+  Delete "$INSTDIR\translations\qt_da.qm"
+  Delete "$INSTDIR\translations\qt_cs.qm"
+  Delete "$INSTDIR\translations\qt_ca.qm"
+  Delete "$INSTDIR\translations\qt_bg.qm"
+  Delete "$INSTDIR\translations\qt_ar.qm"
+  Delete "$INSTDIR\styles\qwindowsvistastyle.dll"
   Delete "$INSTDIR\Qt5Widgets.dll"
+  Delete "$INSTDIR\Qt5Svg.dll"
   Delete "$INSTDIR\Qt5Gui.dll"
   Delete "$INSTDIR\Qt5Core.dll"
   Delete "$INSTDIR\platforms\qwindows.dll"
-  Delete "$INSTDIR\platforms\qoffscreen.dll"
-  Delete "$INSTDIR\platforms\qminimal.dll"
-  Delete "$INSTDIR\platforms\qdirect2d.dll"
-  Delete "$INSTDIR\styles\qwindowsvistastyle.dll"
+  Delete "$INSTDIR\opengl32sw.dll"
+  Delete "$INSTDIR\libwinpthread-1.dll"
+  Delete "$INSTDIR\libstdc++-6.dll"
+  Delete "$INSTDIR\libGLESv2.dll"
+  Delete "$INSTDIR\libgcc_s_seh-1.dll"
+  Delete "$INSTDIR\libEGL.dll"
+  Delete "$INSTDIR\imageformats\qwebp.dll"
+  Delete "$INSTDIR\imageformats\qwbmp.dll"
+  Delete "$INSTDIR\imageformats\qtiff.dll"
+  Delete "$INSTDIR\imageformats\qtga.dll"
+  Delete "$INSTDIR\imageformats\qsvg.dll"
+  Delete "$INSTDIR\imageformats\qjpeg.dll"
+  Delete "$INSTDIR\imageformats\qico.dll"
+  Delete "$INSTDIR\imageformats\qicns.dll"
+  Delete "$INSTDIR\imageformats\qgif.dll"
+  Delete "$INSTDIR\iconengines\qsvgicon.dll"
+  Delete "$INSTDIR\D3Dcompiler_47.dll"
   Delete "$INSTDIR\add-mods.exe"
 
-  Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
+  Delete "$SMPROGRAMS\Add Mods\Uninstall.lnk"
   Delete "$DESKTOP\Add Mods.lnk"
-  Delete "$SMPROGRAMS\$ICONS_GROUP\Add Mods.lnk"
+  Delete "$SMPROGRAMS\Add Mods\Add Mods.lnk"
 
-  RMDir "$SMPROGRAMS\$ICONS_GROUP"
-  RMDir "$INSTDIR\platforms"
+  RMDir "$SMPROGRAMS\Add Mods"
+  RMDir "$INSTDIR\translations"
   RMDir "$INSTDIR\styles"
+  RMDir "$INSTDIR\platforms"
+  RMDir "$INSTDIR\imageformats"
+  RMDir "$INSTDIR\iconengines"
   RMDir "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
