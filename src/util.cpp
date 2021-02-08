@@ -7,18 +7,19 @@ void revealFile(QWidget* parent, const QString &pathToReveal) {
 
     // Mac, Windows support folder or file.
 #if defined(Q_OS_WIN)
-    const QString explorer = Environment::systemEnvironment().searchInPath(QLatin1String("explorer.exe"));
+    // const QString explorer = Environment::systemEnvironment().searchInPath(QLatin1String("explorer.exe"));
+    const QString explorer = "explorer.exe";
     if (explorer.isEmpty()) {
         QMessageBox::warning(parent,
-                             tr("Launching Windows Explorer failed"),
-                             tr("Could not find explorer.exe in path to launch Windows Explorer."));
+                             "파일 탐색기 열기를 실패 했습니다.",
+                             "파일 탐색기 실행 파일을 찾을 수 없습니다.");
         return;
     }
     QString param;
+    QString pathIn = pathToReveal;
     if (!QFileInfo(pathIn).isDir())
         param = QLatin1String("/select,");
     param += QDir::toNativeSeparators(pathIn);
-    QString command = explorer + " " + param;
     QString command = explorer + " " + param;
     QProcess::startDetached(command);
 

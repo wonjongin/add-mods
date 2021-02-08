@@ -7,7 +7,7 @@ QString Minecraft::getMinecraftPath()
     QString path;
     #ifdef Q_OS_WIN
         QString home = QDir::homePath();
-        QString appdata = qEnvironmentVariable("APPDATA")
+        QString appdata = qEnvironmentVariable("APPDATA");
         path = appdata + "\\.minecraft";
     #endif
     #ifdef Q_OS_MACOS

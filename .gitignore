@@ -2,3 +2,5 @@ build
 packs
 scripts/macBuild.sh
 scripts/winBuild.sh
+scripts/winBuild.bat
+dist
